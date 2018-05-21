@@ -1,7 +1,7 @@
 {
   "pages":[
-    "pages/start/start",
     "pages/index/index",
+    "pages/start/start",
     "pages/goods-details/index",
     "pages/shop-cart/index",
     "pages/to-pay-order/index",
@@ -9,13 +9,7 @@
     "pages/address-add/index",
     "pages/order-list/index",
     "pages/order-details/index",
-    "pages/wuliu/index",
-    "pages/mycoupons/index",
     "pages/my/index",
-    "pages/notice/show",
-    "pages/recharge/index",
-    "pages/withdraw/index",
-    "pages/kanjia/index",
     "pages/authorize/index"
   ],
   "window":{
