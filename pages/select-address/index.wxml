@@ -1,15 +1,15 @@
 <view class="container">
     <view class="address-list">
         <view class="a-address"  wx:for-items="{{addressList}}" wx:key="{{index}}">
-             <view class="left-text {{item.isDefault? 'active':''}}" bindtap="selectTap" data-id="{{item.id}}">
+             <view class="left-text {{item.address_default == '1' ? 'active':''}}" bindtap="selectTap" data-id="{{item.address_id}}">
                  <view class="name-tel">
-                    {{item.linkMan}}  {{item.mobile}}
+                    {{item.user_tname}}  {{item.user_phone}}
                  </view>
                  <view class="address-box">
-                    {{item.address}}
+                    {{item.address_province}}{{item.address_city}}{{item.address_area}}{{item.address_text}}
                  </view>     
              </view>   
-             <view class="right-edit" bindtap="editAddess" data-id="{{item.id}}"></view> 
+             <view class="right-edit" bindtap="editAddess" data-id="{{item.address_id}}"></view> 
         </view>
     </view>
     <view class="bottom-box">

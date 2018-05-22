@@ -54,6 +54,10 @@ Page({
     onLoad: function() {
         var that = this;
 
+        if(app.globalData.userInfo == null){
+            app.wxLogin();
+        }
+
         //ad
         wx.request({
             url: app.globalData.domain,
@@ -62,12 +66,13 @@ Page({
                 act: 'list'
             },
             success: function(res) {
-                console.log(res);
                 if(res.data.code == 200){
                     that.setData({
                         host:app.globalData.host,
                         banners: res.data.data
                     });
+                } else {
+                    console.log('');
                 }
             }
         }) 
@@ -115,7 +120,6 @@ Page({
                 name_like: that.data.searchInput,
             },
             success: function(res) {
-                console.log('res:',res);
                 that.setData({
                     goods: [],
                     loadingMoreHidden: true
@@ -130,7 +134,6 @@ Page({
                 for (var i = 0; i < res.data.data.length; i++) {
                     goods.push(res.data.data[i]);
                 }
-                console.log('goods:',goods);
                 that.setData({
                     goods: goods,
                     host:app.globalData.host
