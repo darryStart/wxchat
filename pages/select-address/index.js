@@ -4,6 +4,10 @@ Page({
         addressList: []
     },
 
+    onShow: function() {
+        this.initShippingAddress();
+    },   
+
     selectTap: function(e) {
         var id = e.currentTarget.dataset.id;
         wx.request({
@@ -31,11 +35,6 @@ Page({
             url: "/pages/address-add/index?id=" + e.currentTarget.dataset.id
         })
     },
-
-    onLoad: function() {
-        console.log('sf');
-        this.initShippingAddress();
-    },   
 
     initShippingAddress: function() {
         var that = this;

@@ -11,7 +11,55 @@ Page({
         selDistrict: '请选择',
         selProvinceIndex: 0,
         selCityIndex: 0,
-        selDistrictIndex: 0
+        selDistrictIndex: 0,
+        id:0,
+        is_default:1
+    },
+
+
+    onLoad: function(e) {
+        var that = this;
+        this.initCityData(1);
+        var id = e.id;
+        if (id) {
+            that.data.id = id;
+
+            // 初始化原数据
+            wx.showLoading();
+            wx.request({
+                url: app.globalData.domain,
+                data: {
+                    mod:'address',
+                    act:'edit',
+                    token: app.globalData.userInfo.token,
+                    aid: id
+                },
+                success: function(res) {
+                    console.log(res);
+                    wx.hideLoading();
+                    if (res.data.code == 200) {
+                        that.setData({
+                            addressData: res.data.data,
+                            selProvince: res.data.data.address_province,
+                            selCity: res.data.data.address_city,
+                            selDistrict: res.data.data.address_area,
+                            is_default:res.data.data.address_default
+                        });
+                        that.setDBSaveAddressId(res.data.data);
+                        return;
+                    } else {
+                        wx.showModal({
+                            title: '提示',
+                            content: '无法获取快递地址数据',
+                            showCancel: false
+                        })
+                    }
+                },
+                fail:function(){
+                    wx.hideLoading();
+                }
+            })
+        }
     },
 
     bindCancel: function() {
@@ -60,22 +108,30 @@ Page({
         }
 
 
-        var cityId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].id;
-        var cityName = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].name;
-
+   
         var districtId;
         var districtName = '';
         if (this.data.selDistrict == "请选择" || !this.data.selDistrict) {
             districtId = '';
         } else {
-            districtId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[this.data.selDistrictIndex].id;
-            districtName = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[this.data.selDistrictIndex].name;
+            if(this.data.selDistrictIndex){
+                districtId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[this.data.selDistrictIndex].id;
+                districtName = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].districtList[this.data.selDistrictIndex].name;
+            }
+            districtName = this.data.selDistrict;
         }
 
-
+        var cityName = this.data.selCity;
+        if(this.data.selCityIndex){
+            var cityId = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].id;
+            cityName = commonCityData.cityData[this.data.selProvinceIndex].cityList[this.data.selCityIndex].name;
+        }
+   
         var provinceId = commonCityData.cityData[this.data.selProvinceIndex].id;
         var provinceName = commonCityData.cityData[this.data.selProvinceIndex].name;
-
+        if(this.data.selProvinceIndex == 0 && this.data.selCityIndex == 0 && this.data.selDistrictIndex == 0){
+            provinceName = this.data.selProvince;
+        }
 
         if (address == "") {
             wx.showModal({
@@ -85,14 +141,7 @@ Page({
             }) 
             return;
         }
-        
-        var apiAddoRuPDATE = "add";
-        var apiAddid = that.data.id;
-        if (apiAddid) {
-            apiAddoRuPDATE = "edit";
-        } else {
-            apiAddid = 0;
-        }
+
         wx.request({
             url: app.globalData.domain,
             method: 'POST',
@@ -101,7 +150,8 @@ Page({
             },
             data: {
                 mod:'address',
-                act: apiAddoRuPDATE,
+                act: 'add',
+                aid:that.data.id,
                 token: app.globalData.userInfo.token,
                 province: provinceName,
                 city: cityName,
@@ -109,7 +159,7 @@ Page({
                 link_man: linkMan,
                 address: address,
                 mobile: mobile,
-                is_default: 1
+                is_default: that.data.is_default
             },
             success: function(res) {
                 if (res.data.code != 200) {
@@ -123,7 +173,11 @@ Page({
                     return;
                 }
                 // 跳转到结算页面
-                wx.navigateBack({})
+                wx.navigateBack({
+                    success:function(){
+                        onShow();
+                    }
+                })
             }
         })
     },
@@ -196,44 +250,6 @@ Page({
         }
     },
 
-    onLoad: function(e) {
-        var that = this;
-        this.initCityData(1);
-        var id = e.id;
-        if (id) {
-            // 初始化原数据
-            wx.showLoading();
-            wx.request({
-                url: app.globalData.domain,
-                data: {
-                    mod:'address',
-                    act:'edit',
-                    token: app.globalData.userInfo.token,
-                    aid: id
-                },
-                success: function(res) {
-                    console.log(res);
-                    wx.hideLoading();
-                    if (res.data.code == 200) {
-                        that.setData({
-                            addressData: res.data.data,
-                        });
-                        that.setDBSaveAddressId(res.data.data);
-                        return;
-                    } else {
-                        wx.showModal({
-                            title: '提示',
-                            content: '无法获取快递地址数据',
-                            showCancel: false
-                        })
-                    }
-                },
-                fail:function(){
-                    wx.hideLoading();
-                }
-            })
-        }
-    },
     setDBSaveAddressId: function(data) {
         var retSelIdx = 0;
         for (var i = 0; i < commonCityData.cityData.length; i++) {
