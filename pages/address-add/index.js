@@ -13,9 +13,12 @@ Page({
         selCityIndex: 0,
         selDistrictIndex: 0
     },
+
     bindCancel: function() {
         wx.navigateBack({})
     },
+
+
     bindSave: function(e) {
         var that = this;
         var linkMan = e.detail.value.linkMan;
@@ -124,6 +127,8 @@ Page({
             }
         })
     },
+
+
     initCityData: function(level, obj) {
         if (level == 1) {
             var pinkArray = [];
@@ -154,6 +159,8 @@ Page({
         }
 
     },
+
+
     bindPickerProvinceChange: function(event) {
         var selIterm = commonCityData.cityData[event.detail.value];
         this.setData({
@@ -166,6 +173,8 @@ Page({
         }) 
         this.initCityData(2, selIterm)
     },
+
+
     bindPickerCityChange: function(event) {
         var selIterm = commonCityData.cityData[this.data.selProvinceIndex].cityList[event.detail.value];
         this.setData({
@@ -195,20 +204,19 @@ Page({
             // 初始化原数据
             wx.showLoading();
             wx.request({
-                url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/detail',
+                url: app.globalData.domain,
                 data: {
-                    token: wx.getStorageSync('token'),
-                    id: id
+                    mod:'address',
+                    act:'edit',
+                    token: app.globalData.userInfo.token,
+                    aid: id
                 },
                 success: function(res) {
+                    console.log(res);
                     wx.hideLoading();
-                    if (res.data.code == 0) {
+                    if (res.data.code == 200) {
                         that.setData({
-                            id: id,
                             addressData: res.data.data,
-                            selProvince: res.data.data.provinceStr,
-                            selCity: res.data.data.cityStr,
-                            selDistrict: res.data.data.areaStr
                         });
                         that.setDBSaveAddressId(res.data.data);
                         return;
@@ -219,6 +227,9 @@ Page({
                             showCancel: false
                         })
                     }
+                },
+                fail:function(){
+                    wx.hideLoading();
                 }
             })
         }
@@ -241,9 +252,7 @@ Page({
             }
         }
     },
-    selectCity: function() {
-
-},
+    selectCity: function() {},
     deleteAddress: function(e) {
         var that = this;
         var id = e.currentTarget.dataset.id;
@@ -253,10 +262,12 @@ Page({
             success: function(res) {
                 if (res.confirm) {
                     wx.request({
-                        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/shipping-address/delete',
+                        url: app.globalData.domain,
                         data: {
-                            token: wx.getStorageSync('token'),
-                            id: id
+                            mod:'address',
+                            act:'del',
+                            token: app.globalData.userInfo.token,
+                            aid: id
                         },
                         success: (res) => {
                             wx.navigateBack({})
