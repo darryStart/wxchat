@@ -161,8 +161,8 @@ Page({
 
     onShareAppMessage:function () {
 
-        // var share_url = helper.getCurrentPageUrlWithArgs() + '?uid=' + app.globalData.userInfo.sessionid;
-        return helper.shareAppMessage(app.globalData.shopName, share_url);
+        var share_url = helper.getCurrentPageUrlWithArgs() + '?key=' + app.globalData.userInfo.rname;
+        return helper.shareAppMessage('', share_url);
     },
 
     listenerSearchInput: function(e) {

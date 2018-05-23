@@ -1,8 +1,12 @@
 //app.js
 App({
     globalData:{
-        domain:'http://192.168.8.233/wx_shop/api.php',
-        host:'http://192.168.8.233/wx_shop/',
+        // domain:'http://192.168.8.233/wx_shop/api.php',
+        // host:'http://192.168.8.233/wx_shop/',
+
+        domain:'https://mall.yizhibo.tv/api.php',
+        host:'https://mall.yizhibo.tv/',
+
         videoHost:'https://api.yizhibo.tv',
         recommend_key:'',
         userInfo:null,
@@ -11,7 +15,9 @@ App({
     },
 
     onLaunch: function (e) {
-        var that = this;
+        if(e.query.key){
+            this.globalData.recommend_key = e.query.key;
+        }
     },
 
     wxLogin:function(){
@@ -35,6 +41,7 @@ App({
                                                 recommend_key:that.globalData.recommend_key
                                             },
                                             success: function(res) {
+                                                console.log(that.globalData.recommend_key);
                                                 if(res.data.code == 200){
                                                     that.globalData.userInfo = res.data.data;
                                                 } else {
