@@ -79,51 +79,66 @@ Page({
         })
     },
 
+    getMobileSystem:function(){
+        var that = this;
+        wx.getSystemInfo({
+            success:function(res){
+                that.setData({
+                    systemInfo:res,
+                })
+                console.log(res);
+                if(res.system.indexOf("iOS") > 0){
+                    that.data.mobile_type = 'ios';
+                }else if(res.system.indexOf("Android") > 0){
+                    that.data.mobile_type = 'android';
+                } else {
+                    that.data.mobile_type = 'unknown';
+                }
+            }
+        })
+    },
+
     toPayTap: function(e) {
         var that = this;
         var orderId = e.currentTarget.dataset.id;
         var money = e.currentTarget.dataset.money;
-        var needScore = e.currentTarget.dataset.score;
+        that.getMobileSystem();
         wx.request({
-            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
+            url: app.globalData.domain,
             data: {
-                token: wx.getStorageSync('token')
+                mod:'wxpay',
+                act:'callpay',
+                id:orderId,
+                uid:app.globalData.userInfo.token,
+                openid:app.globalData.userInfo.openid,
+                mobile_type:that.data.mobile_type,
+                amount:money
             },
             success: function(res) {
-                if (res.data.code == 0) {
-                    // res.data.data.balance
-                    money = money - res.data.data.balance;
-                    if (res.data.data.score < needScore) {
-                        wx.showModal({
-                            title: '错误',
-                            content: '您的积分不足，无法支付',
-                            showCancel: false
-                        }) 
-                        return;
-                    }
-                    if (money <= 0) {
-                        // 直接使用余额支付
-                        wx.request({
-                            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/pay',
-                            method: 'POST',
-                            header: {
-                                'content-type': 'application/x-www-form-urlencoded'
-                            },
-                            data: {
-                                token: wx.getStorageSync('token'),
-                                orderId: orderId
-                            },
-                            success: function(res2) {
-                                that.onShow();
-                            }
-                        })
-                    } else {
-                        wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
-                    }
+                if (res.data.code == 200) {
+                    var config = res.data.data;
+
+                    wx.requestPayment({
+                        'timeStamp': config.timeStamp,
+                        'nonceStr': config.nonceStr,
+                        'package': config.package,
+                        'signType': config.signType,
+                        'paySign': config.paySign,
+                        success:function(res){
+                            that.onShow();
+                        },
+                        fail:function(res){
+                            wx.showModal({
+                                title: '错误',
+                                content: '支付失败,请稍后重试！',
+                                showCancel: false
+                            }) 
+                        }
+                    })
                 } else {
                     wx.showModal({
                         title: '错误',
-                        content: '无法获取用户资金信息',
+                        content: '支付失败,请稍后重试！',
                         showCancel: false
                     })
                 }
