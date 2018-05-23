@@ -3,6 +3,7 @@ App({
     globalData:{
         domain:'http://192.168.8.233/wx_shop/api.php',
         host:'http://192.168.8.233/wx_shop/',
+        videoHost:'https://api.yizhibo.tv',
         recommend_key:'',
         userInfo:null,
         shopName:'红哥精品',

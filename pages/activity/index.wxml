@@ -1,19 +1,16 @@
+<!--index.wxml-->
+<!--1px = 750/320 = 2.34rpx;-->
 <view class="container">
-    <view class="video-container">
-        <view class="video-box" wx:for-items="{{videos}}" wx:key="{{index}}" bindtap="toVideo" data-vid="{{item.vid}}" data-url="{{item.play_url}}" data-status="{{item.living}}">
-            <view class="img-box">
-                <image src="{{item.logo_thumb}}" class="image" mode="aspectFill" lazy-load="true"/>
-                <view class='watch_num'>{{item.watching_count}}人在看</view>
-                <view class="name">{{item.nickname}}</view>
-                <view wx:if="{{item.living==1}}">
-                    <view class="status">直播中</view>
-                </view>
-                <view wx:else>
-                    <view class="status">回放</view>
-                </view>
-            </view>
+    <view class="goods-container">
+        <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.product_id}}">
+           <view class="img-box">
+              <image src="{{host}}{{item.product_logo}}" class="image" mode="aspectFill" lazy-load="true"/>
+           </view>
+           <view class="goods-title">{{item.product_name}}</view>
+           <view style='display:flex;'>
+            <view class="goods-price">¥ {{item.product_smoney}}</view>
+           </view>           
         </view>
     </view>
-    <view hidden="{{loading ? true : false}}" class="more">加载更多...</view>
-    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more">没有更多啦</view>
+    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
 </view>

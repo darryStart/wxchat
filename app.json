@@ -12,8 +12,7 @@
         "pages/select-address/index",
         "pages/address-add/index",
         "pages/order-list/index",
-        "pages/my/index",
-        "pages/authorize/index"
+        "pages/my/index"
     ],
     "window": {
         "backgroundTextStyle": "dark",
@@ -39,6 +38,12 @@
                 "iconPath": "images/nav/activity-off.png",
                 "selectedIconPath": "images/nav/activity-on.png",
                 "text": "活动"
+            },
+            {
+                "pagePath": "pages/video-list/index",
+                "iconPath": "images/nav/video-off.png",
+                "selectedIconPath": "images/nav/video-on.png",
+                "text": "直播"
             },
             {
                 "pagePath": "pages/shop-cart/index",

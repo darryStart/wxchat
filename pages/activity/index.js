@@ -1,89 +1,72 @@
 //index.js
 //获取应用实例
-var app = getApp()
+var app = getApp();
 Page({
-
-    data:{
-        start:0,
-        count:10,
-        videos:[]
-    },
-    onLoad: function () {
-
-        this.setData({
-            loadingMoreHidden:true,
-        });
-        this.getVideoList();
+    data: {
+        loadingHidden: false,
+        swiperCurrent: 0,
+        goods: [],
+        scrollTop: "0",
+        loadingMoreHidden: true,
     },
 
-    toVideo:function(e){
-        if(e.currentTarget.dataset.status == 1){
-            wx.navigateTo({
-                url:"/pages/live/live?"+
-                "vid="+e.currentTarget.dataset.vid+
-                "&url="+e.currentTarget.dataset.url
-            })
-        }else{
-            wx.navigateTo({
-                url:"/pages/video/video?"+
-                "vid="+e.currentTarget.dataset.vid
-            })
+    onLoad: function() {
+        var that = this;
+
+        wx.setNavigationBarTitle({  
+            title: app.globalData.shopName  
+        }) 
+
+        if(app.globalData.userInfo == null){
+            app.wxLogin();
         }
+
+        that.getGoodsList(0);
     },
+
 
     onPullDownRefresh(){
-        this.getVideoList();
+        this.getGoodsList(0);
+        wx.stopPullDownRefresh();
     },
 
-    onReachBottom(){
-        this.setData({
-            loading:false,
-        });
-        this.getVideoList();
+    toDetailsTap: function(e) {
+        wx.navigateTo({
+            url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+        })
     },
 
-
-    
-    getVideoList: function () {
+    getGoodsList: function(categoryId) {
+        if (categoryId == 0) {
+            categoryId = "";
+        }
         var that = this;
         wx.request({
-            url: app.globalData.host +'/v2/miniprog/livehot',
-            data: {'start':that.data.start,'count':that.data.count},
+            url: app.globalData.domain,
+            data: {
+                mod:'product',
+                act:'cate_page',
+                cate_id: categoryId,
+            },
             success: function(res) {
-                console.log(res);
-                // var videos = that.data.videos;
-                if (res.data.retval != 'ok') {
+                that.setData({
+                    goods: [],
+                    loadingMoreHidden: true
+                });
+                var goods = [];
+                if (res.data.code != 200 || res.data.data.length == 0) {
                     that.setData({
-                        loadingMoreHidden:false,
+                        loadingMoreHidden: false,
                     });
                     return;
                 }
-                var count = res.data.retinfo.count;
-                for(var i=0;i<count;i++){
-                    that.data.videos.push(res.data.retinfo.videos[i]);
+                for (var i = 0; i < res.data.data.length; i++) {
+                    goods.push(res.data.data[i]);
                 }
-                that.data.start += that.data.count; 
-
-                if(count == 0){
-                    that.setData({
-                        loading:true,
-                        loadingMoreHidden:false,
-                    });
-                }else{
-                    that.setData({
-                        videos:that.data.videos,
-                        loadingMoreHidden:true,
-                    });
-                }
-            },
-            fail:function(){
                 that.setData({
-                    loading:true,
+                    goods: goods,
+                    host:app.globalData.host
                 });
-            },
-            complete:function(){
-                wx.hideNavigationBarLoading() //完成停止加载
-                wx.stopPullDownRefresh() //停止下拉刷新
             }
         })
     }

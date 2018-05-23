@@ -31,7 +31,12 @@ Page({
             app.wxLogin();
         }
 
-        //ad
+        that.getAd();
+        that.getCate();
+    },
+
+    getAd(){
+        var that = this;
         wx.request({
             url: app.globalData.domain,
             data: {
@@ -49,8 +54,10 @@ Page({
                 }
             }
         }) 
+    },
 
-        //cate
+    getCate(){
+        var that = this;
         wx.request({
             url: app.globalData.domain,
             data:{
@@ -76,8 +83,13 @@ Page({
                 that.getGoodsList(0);
             }
         }) 
+    },
 
 
+    onPullDownRefresh(){
+        this.getAd();
+        this.getCate();
+         wx.stopPullDownRefresh();
     },
 
     tabClick: function(e) {

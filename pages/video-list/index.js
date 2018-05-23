@@ -47,7 +47,7 @@ Page({
     getVideoList: function () {
         var that = this;
         wx.request({
-            url: app.globalData.host +'/v2/miniprog/livehot',
+            url: app.globalData.videoHost +'/v2/miniprog/livehot',
             data: {'start':that.data.start,'count':that.data.count},
             success: function(res) {
                 console.log(res);

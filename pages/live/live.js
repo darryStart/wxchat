@@ -33,12 +33,14 @@ Page({
         this.ctx = wx.createLivePlayerContext('player');
         this.data.vid = e.vid;
         this.data.play_url = e.url;
-        this.data.sid = wx.getStorageSync('gust_session_id');
+        this.data.sid = app.globalData.userInfo.sessionid;
 
-        if(this.data.sid == 0 || this.data.sid == ''){
-            app.createGust();
-            this.data.sid = wx.getStorageSync('gust_session_id');
+        if(this.data.sid == 0 || this.data.sid == 'undefined'){
+            app.wxLogin();
+            this.data.sid = app.globalData.userInfo.sessionid;
         }
+
+
         this.data.share_url = helper.getCurrentPageUrlWithArgs();
         this.getWatchStart();        
     },
@@ -50,7 +52,7 @@ Page({
     getWatchStart:function(){
         var that = this;
         wx.request({
-            url: app.globalData.host +'/watchstart',
+            url: app.globalData.videoHost +'/watchstart',
             data: {'sessionid':this.data.sid,'vid':this.data.vid},
             success: function(res) {
                 if (res.data.retval == 'ok') {
@@ -83,7 +85,7 @@ Page({
     getVideoStatus:function(info){
         var that = this;
         wx.request({
-            url: app.globalData.host +'/chat',
+            url: app.globalData.videoHost +'/chat',
             data: {
                 'vid':that.data.vid,
                 'sid':that.data.sid,
