@@ -1,0 +1,30 @@
+<template name="videoCoverView">
+	<cover-view class="header">
+		<cover-view class='living-user'>
+			<cover-image class="live-img1" src='{{thumb}}'></cover-image>
+			<cover-view class="live-text">
+				<cover-view wx:if="{{live_status == 1}}">直播中</cover-view>
+				<cover-view wx:else>回放中</cover-view>
+				<cover-view>{{watch_num}}人观看</cover-view>
+			</cover-view>
+		</cover-view>
+		<cover-view class="live-user2">
+			<cover-view class="live-user2-box" >
+				<cover-image wx:for="{{watchings}}" wx:key="key" class='live-user-in' src='{{item.lg}}'></cover-image>				
+			</cover-view>
+		</cover-view>
+		<cover-view class="live-close">
+			<cover-image bindtap="toVideoList" src='/imgs/close.png'></cover-image>
+		</cover-view>
+	</cover-view>
+	<cover-view class="live-userid">
+		<cover-view class="live-left">饭团:{{rice_num}}</cover-view>
+		<cover-view class="live-right logo-id">
+			<cover-image class='live-logo' src='/imgs/logo.png'></cover-image>
+			<cover-view class="live-user-id">ID:{{name}}</cover-view>
+		</cover-view>
+	</cover-view>
+	<cover-view class="footer">
+			<cover-image class='live-btn' src='/imgs/share.png'></cover-image>				
+	</cover-view>
+</template>

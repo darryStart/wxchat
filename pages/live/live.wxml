@@ -1,0 +1,6 @@
+<import src="/common/templates/video.wxml"/>
+<view class="play-page"  disable-scroll="true">
+	<live-player class="player" id="player" objectFit='cover' disable-scroll="true" src="{{url}}" mode="live" orientation="vertical" background-mute="true" autoplay bindstatechange="statechange" binderror="error" style="display: {{startPlay}}">
+	<template is='videoCoverView' data="{{thumb,watchings,rice_num,name,live_status}}"/>
+	</live-player>
+</view>

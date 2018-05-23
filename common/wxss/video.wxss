@@ -1,0 +1,119 @@
+.play-page{
+    height: 100vh;
+    overflow-y:hidden;
+}
+
+.header {
+    display: flex;
+    margin-top: 1%;
+}
+.living-user {
+    display: flex;
+    margin: 5px;
+    border-radius: 25px;
+    background: #CBCBCB;
+    opacity:0.7;
+
+}
+.live-img1 {
+    display: inline-block;
+    margin-right: 5px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+ /*   -moz-border-radius:50%;  
+    -ms-border-radius:50%;  
+    -o-border-radius:50%;  
+    border-radius:50%; */
+}
+.live-text {
+    display: inline-block;
+    line-height: 14px;
+    color:white;
+    font-size: 14px;
+    margin:auto;
+    padding-right: 5px;
+}
+
+/** 观众列表盒子 */
+.live-user2 {
+    flex: 1;
+    margin:1% 5px;
+/*    overflow: hidden;
+    white-space: nowrap;*/
+    display: block;
+
+}
+.live-user2-box {
+    /*padding: 2px;*/
+    display: block;
+    width: 10000px;
+    word-break:keep-all;
+    white-space: nowrap;
+    overflow:hidden;
+}
+.live-user-in {
+    float: left;
+    margin-left: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.live-close {
+    text-align: center;
+    line-height: 25px;
+    width: 25px;
+    height: 25px;
+    margin:auto 10px;
+
+}
+.footer {
+    position: absolute;
+    height: 50px;
+    width: 100px;
+    bottom: 0;
+    right: 0;
+}
+.live-btn {
+    position: fixed;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    bottom: 10vh;
+    right: 0px;
+}
+.live-userid {
+    display: flex;
+    justify-content: space-between;
+    padding:0px 5px;
+    color: white;
+}
+.logo-id {
+    height: 80px;
+    text-align: right;
+}
+.live-logo {
+    display: block;
+    height: 35px;
+    width: 95px;
+}
+
+.live-left{
+    height: 25px;
+    line-height: 25px;
+    background-color : #CBCBCB;
+    text-align:center;
+    
+    -moz-border-radius:50%;  
+    -ms-border-radius:50%;  
+    -o-border-radius:50%;  
+    border-radius:50%; 
+
+    /*-moz-border-radius:25%; */
+    /*border-radius: 25%;*/
+    /*padding:0px 3px;*/
+    opacity:0.7;
+    min-width: 125px;
+    /*-webkit-appearance : none ;*/
+    /*-webkit-transform: translateX(0px);*/
+}

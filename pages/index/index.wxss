@@ -55,7 +55,7 @@ swiper-item image {
 .type-box{
   width:160rpx;
   box-sizing: content-box;
-  font-size: 24rpx;
+  font-size: 30rpx;
   line-height: 84rpx;
   text-align: center;
   display: inline-block;
@@ -73,14 +73,16 @@ swiper-item image {
   justify-content: space-between;  
   flex-wrap:wrap;
   box-sizing: content-box;
-  padding: 24rpx;
+  padding: 14rpx;
 }
 .goods-box{
   width: 339rpx;
-  height: 472rpx;
+  height: 456rpx;
   background-color: #fff;
   overflow: hidden;
   margin-bottom: 24rpx;
+  border-radius: 5px;
+  margin: 20rpx 12rpx 20rpx 12rpx;
 }
 .goods-box .img-box{
   width: 339rpx;
@@ -96,7 +98,7 @@ swiper-item image {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 24rpx;
+  font-size: 28rpx;
   padding: 24rpx 0 0rpx 0;
   color:#000;
   margin-left: 24rpx;
@@ -104,8 +106,8 @@ swiper-item image {
 .goods-box .goods-price{
   width: 280rpx;
   overflow: hidden;
-  font-size: 24rpx;
-  padding: 24rpx 0;
+  font-size: 28rpx;
+  padding: 14rpx 0;
   color:#e64340;
   margin-left: 24rpx;
 }

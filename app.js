@@ -1,12 +1,12 @@
 //app.js
 App({
     globalData:{
-        domain:'http://localhost/wx_shop/api.php',
-        host:'http://localhost/wx_shop/',
+        domain:'http://192.168.8.233/wx_shop/api.php',
+        host:'http://192.168.8.233/wx_shop/',
         recommend_key:'',
         userInfo:null,
-        subDomain: "tz",
-        version: "2.0",
+        shopName:'红哥精品',
+        aboutUs:'红哥精品店，只为您提供网红精品商品，给您最好的购物体验。'
     },
 
     onLaunch: function (e) {
@@ -39,6 +39,9 @@ App({
                                                 } else {
                                                     console.log('登录失败！');
                                                 }
+                                            },
+                                            fail:function(msg) {
+                                                console.log(msg);
                                             }
                                         })
                                     }
@@ -51,13 +54,17 @@ App({
                     })
                     
                 } else {
-                    console.log('213');
+                    console.log('没有授权');
                 }
             },
             fail:function(res){
                 console.log(res);
-            }
-            ,
+                wx.openSetting({
+                    success:function(){
+                        that.wxLogin();
+                    }
+                })
+            },
             ccomplete:function(res){
                 console.log(res);
             }

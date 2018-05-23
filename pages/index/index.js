@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
-var app = getApp() 
+var app = getApp();
+var helper = require('../../utils/helper.js');
 Page({
     data: {
         indicatorDots: true,
@@ -16,43 +17,15 @@ Page({
         goods: [],
         scrollTop: "0",
         loadingMoreHidden: true,
-
-        hasNoCoupons: true,
         searchInput: '',
     },
 
-    tabClick: function(e) {
-        this.setData({
-            activeCategoryId: e.currentTarget.id
-        });
-        this.getGoodsList(this.data.activeCategoryId);
-    },
-    //事件处理函数
-    swiperchange: function(e) {
-        this.setData({
-            swiperCurrent: e.detail.current
-        })
-    },
-    toDetailsTap: function(e) {
-        wx.navigateTo({
-            url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
-        })
-    },
-
-    bindTypeTap: function(e) {
-        this.setData({
-            selectCurrent: e.index
-        })
-    },
-    scroll: function(e) {
-        var that = this,
-        scrollTop = that.data.scrollTop;
-        that.setData({
-            scrollTop: e.detail.scrollTop
-        })
-    },
     onLoad: function() {
         var that = this;
+
+        wx.setNavigationBarTitle({  
+            title: app.globalData.shopName  
+        }) 
 
         if(app.globalData.userInfo == null){
             app.wxLogin();
@@ -106,6 +79,38 @@ Page({
 
 
     },
+
+    tabClick: function(e) {
+        this.setData({
+            activeCategoryId: e.currentTarget.id
+        });
+        this.getGoodsList(this.data.activeCategoryId);
+    },
+    //事件处理函数
+    swiperchange: function(e) {
+        this.setData({
+            swiperCurrent: e.detail.current
+        })
+    },
+    toDetailsTap: function(e) {
+        wx.navigateTo({
+            url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
+        })
+    },
+
+    bindTypeTap: function(e) {
+        this.setData({
+            selectCurrent: e.index
+        })
+    },
+    scroll: function(e) {
+        var that = this,
+        scrollTop = that.data.scrollTop;
+        that.setData({
+            scrollTop: e.detail.scrollTop
+        })
+    },
+
     getGoodsList: function(categoryId) {
         if (categoryId == 0) {
             categoryId = "";
@@ -142,18 +147,12 @@ Page({
         })
     },
 
-    onShareAppMessage: function() {
-        return {
-            title: wx.getStorageSync('mallName') + '——' + app.globalData.shareProfile,
-            path: '/pages/index/index',
-            success: function(res) {
-                // 转发成功
-            },
-            fail: function(res) {
-                // 转发失败
-            }
-        }
+    onShareAppMessage:function () {
+
+        // var share_url = helper.getCurrentPageUrlWithArgs() + '?uid=' + app.globalData.userInfo.sessionid;
+        return helper.shareAppMessage(app.globalData.shopName, share_url);
     },
+
     listenerSearchInput: function(e) {
         this.setData({
             searchInput: e.detail.value

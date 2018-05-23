@@ -1,0 +1,6 @@
+<import src="/common/templates/video.wxml"/>
+<view class="play-page"  disable-scroll="true">
+	<video class="player" id="player" disable-scroll="true" controls src="{{url}}" orientation="vertical" objectFit='cover'  background-mute="true" show-play-btn="false" show-center-play-btn="false" enable-progress-gesture bindstatechange="statechange" binderror="error" show-fullscreen-btn="false" style="display: {{startPlay}};">
+		<template is='videoCoverView' data="{{thumb,watchings,rice_num,name,live_status}}"/>
+	</video>
+</view>

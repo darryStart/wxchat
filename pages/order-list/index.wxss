@@ -58,9 +58,10 @@
     width: 100%;
 }
 .order-list .a-order{
-    width: 100%;
+    /*width: 100%;*/
     background-color: #fff;
-    margin-top: 20rpx;
+    margin: 20rpx;
+    border-radius: 5px;
 }
 .order-list .a-order .order-date{
     padding: 0 30rpx;
@@ -80,8 +81,9 @@
     width: 720rpx;
     margin-left: 30rpx;
     border-top: 1rpx solid #eee;
-    border-bottom: 1rpx solid #eee;
+    /*border-bottom: 1rpx solid #eee;*/
     padding: 30rpx 0;
+    padding-bottom: 0rpx;
     display: flex;
     align-items: center;
 }
@@ -146,10 +148,11 @@
 .a-order .price-box .cancel-btn{
     border: 1rpx solid #ccc;
     position: absolute;
-    right: 216rpx;
+    right: 236rpx;
     top:20rpx;
 }
 .a-order .price-box .topay-btn{
     border:1px solid #e64340;
     color: #e64340;
+    margin-right: 20rpx;
 }
