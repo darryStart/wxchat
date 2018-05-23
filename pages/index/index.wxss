@@ -73,7 +73,7 @@ swiper-item image {
   justify-content: space-between;  
   flex-wrap:wrap;
   box-sizing: content-box;
-  padding: 14rpx;
+  padding: 12rpx;
 }
 .goods-box{
   width: 339rpx;
