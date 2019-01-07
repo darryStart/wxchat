@@ -18,10 +18,11 @@ Page({
 
     toVideo:function(e){
         if(e.currentTarget.dataset.status == 1){
+            var play_url = encodeURIComponent(e.currentTarget.dataset.url);
             wx.navigateTo({
                 url:"/pages/live/live?"+
                 "vid="+e.currentTarget.dataset.vid+
-                "&url="+e.currentTarget.dataset.url
+                "&url="+play_url
             })
         }else{
             wx.navigateTo({

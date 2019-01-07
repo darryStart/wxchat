@@ -1,11 +1,11 @@
 //app.js
 App({
     globalData:{
-        domain:'http://192.168.8.233/wx_shop/api.php',
-        host:'http://192.168.8.233/wx_shop/',
+        // domain:'http://192.168.8.233/wx_shop/api.php',
+        // host:'http://192.168.8.233/wx_shop/',
 
-        // domain:'https://mall.yizhibo.tv/api.php',
-        // host:'https://mall.yizhibo.tv/',
+        domain:'https://mall.yizhibo.tv/api.php',
+        host:'https://mall.yizhibo.tv/',
 
         videoHost:'https://api.yizhibo.tv',
         recommend_key:'',

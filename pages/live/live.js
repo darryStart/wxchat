@@ -32,7 +32,7 @@ Page({
 
         this.ctx = wx.createLivePlayerContext('player');
         this.data.vid = e.vid;
-        this.data.play_url = e.url;
+        this.data.play_url = decodeURIComponent(e.url);
         this.data.sid = app.globalData.userInfo.sessionid;
 
         if(this.data.sid == 0 || this.data.sid == 'undefined'){
@@ -147,6 +147,7 @@ Page({
 
     setVideo:function(){
         var that = this;
+        console.log(that.data.play_url);
         that.setData({
             'url' : that.data.play_url,
             'thumb':that.data.thumb,
