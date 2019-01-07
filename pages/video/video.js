@@ -153,7 +153,7 @@ Page({
                         that.getWatchStart();
                     }, 2000);
                     console.log('play success');
-               },
+                },
                 fail: function() {
                   console.log('play fail');
                 },
@@ -166,9 +166,15 @@ Page({
 
 
     toVideoList:function() {
-        wx.redirectTo({
-            url:"/pages/index/index"
-        })
+        wx.showModal({
+            title: '温馨提示',
+            content: '付费回放，请下载易直播APP观看~',
+            complete: function() {
+                wx.switchTab({
+                    url:'/pages/video-list/index'
+                })
+            }
+        })  
     },
 
     statechange(e) {

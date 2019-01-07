@@ -172,8 +172,8 @@ Page({
 
 
     toVideoList:function() {
-        wx.redirectTo({
-            url:"/pages/index/index"
+        wx.switchTab({
+            url:'/pages/video-list/index'
         })
     },
 
